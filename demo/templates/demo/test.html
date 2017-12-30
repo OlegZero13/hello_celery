@@ -1,0 +1,56 @@
+{% extends 'demo/base.html' %}
+{% block title %}Celery Test{% endblock %}
+{% block test_active %}active{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>Watch the numbers change</h2>
+    </div>
+    <a href="{% url 'demo:start_test' %}" role="button" class="btn btn-primary btn-lg btn-block">Start</a>
+    <a href="{% url 'demo:abort_test' %}" role="button" class="btn btn-danger btn-lg btn-block">Abort</a>
+
+    <h3>Look under the process though JSON.</h3>
+    <label>Data:</label><br>
+    <input id="data-field" value="{{ data }}" size="64">
+    <br>
+    <label>State:</label><br>
+    <input id="state-field" value="{{ state }}" size="64">
+    <br>
+    <h3>From Django-Celery-Result DB.</h3>
+    <label>Status:</label><br>
+    <input id="status-field" value="{{ status }}" size="64">
+    <br>
+    <label>Job ID:</label><br>
+    <input id="job-field" value="{{ task_id }}" size="64">
+  </div>
+</div>
+
+<script type="text/javascript">
+var poll_xhr;
+var checkStatus = {{ check_status }};
+
+update = function(){
+    var task_id = "{{ task_id }}";
+    var state   = "{{ state }}";
+    poll_xhr = $.ajax({
+        url: 'update_status/?task_id={{ task_id }}',
+        type: 'GET',
+        success: function(result){
+            console.log(result);
+            $('#data-field').val(result.iter);
+            $('#state-field').val(result.state);
+            $('#status-field').val(result.status);
+        }
+    });
+}
+
+if (checkStatus){
+  setInterval(function(){update();}, 200);
+}else{
+  clearInterval(function(){update();});
+}
+</script>
+
+{% endblock %}
