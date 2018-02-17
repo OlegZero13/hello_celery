@@ -73,3 +73,8 @@ def abort_test(request):
         return HttpResponseRedirect(reverse('demo:start_test') + '?job=' + currentProcess.task_id)
     except:
         return HttpResponseRedirect(reverse('demo:start_test'))
+
+
+## Dynamic forms demo
+def dynamic(request):
+    return render(request, "demo/dynamic.html", {})
