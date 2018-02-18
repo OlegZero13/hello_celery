@@ -12,5 +12,6 @@ urlpatterns= [
     url(r'^abort_test/$', views.abort_test, name="abort_test"),
 
     url(r'^dynamic/$', views.dynamic, name="dynamic"),
+    url(r'^nondynamic/$', views.nondynamic, name="nondynamic"),
 ]
 

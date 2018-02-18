@@ -1,0 +1,33 @@
+{% extends 'demo/base.html' %}
+{% block title %}Dynamic Forms{% endblock %}
+{% block dynamic_active %}active{% endblock %}
+{% load widget_tweaks %}
+
+{% block body %}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="page-header">
+      <h2>Choose Recipe</h2>
+      <form action="{% url 'demo:static %}" class="form-hotizontal" method="POST">
+        {% csrf_token %}
+        {% for field in cookbook_form %}
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field|add_class:'form-control' }}
+          </div>
+        </div>
+        {% endfor %}
+        <br>
+        <div class="btn-group btn-group-justified" role="group">
+          <div class="btn-group" role="group">
+            <button class="btn-primary" type="submit">Choose Recipe</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <h3>Specify Ingridients</h3>
+    <p>..</p>
+  </div>
+</div>
+{% endblock %}

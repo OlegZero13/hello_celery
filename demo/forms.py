@@ -1,10 +1,10 @@
 from django import forms
-from .models import Igridients, CookBook
+from .models import Ingridients, CookBook
 
 class HamburgerForm(forms.ModelForm):
     class Meta:
         model = Ingridients
-        fields = ['cheese', 'ham', 'onion', 'bread']
+        fields = ['cheese', 'ham', 'onion', 'bread', 'ketchup']
 
 class PancakeForm(forms.ModelForm):
     class Meta:
@@ -14,5 +14,5 @@ class PancakeForm(forms.ModelForm):
 class CookBookForm(forms.ModelForm):
     class Meta:
         model = CookBook
-        exclude = []
+        exclude = ['ingridients']
 

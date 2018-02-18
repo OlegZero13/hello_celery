@@ -7,6 +7,9 @@ from django_celery_results.models import TaskResult
 from celery.result import AsyncResult
 from .tasks import increment
 
+from .forms import *
+from .models import *
+
 import json
 import pdb
 
@@ -76,5 +79,37 @@ def abort_test(request):
 
 
 ## Dynamic forms demo
+def nondynamic(request):
+    context = {}
+
+    ing = Ingridients.objects.last()
+    if ing == None:
+        ing = Ingridients.objects.create()
+
+    ckb = CookBook.objects.last()
+    if ckb == None:
+        ckb = CookBook.objects.create(ingridients=ing)
+
+    if 'recipe_name' in request.POST.keys():
+        ckb.recipe_name = int(request.POST['recipe_name'])
+        ckb.save()
+
+        if request.POST['recipe_name'] == '0':
+            ing_form = HamburgerForm(request.POST, instance=ing)
+        elif request.POST['recipe_name'] == '1':
+            ing_form = PancakeForm(request.POST, instance=ing)
+        context['ingridients_form'] = ing_form
+    else:
+        recipe = ckb.recipe_name
+        if recipe == 0:
+            ing_form = HamburgerForm(request.POST, instance=ing)
+        elif recipe == 1:
+            ing_form = PancakeForm(request.POST, instance=ing)
+        ing_form.save()
+    
+    context['ingridients_form'] = ing_form
+    context['cookbook_form'] = CookBookForm(request.POST or None)
+    return render(request, 'demo/nondynamic.html', context)
+
 def dynamic(request):
     return render(request, "demo/dynamic.html", {})

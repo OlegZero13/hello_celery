@@ -3,20 +3,24 @@ from django.db import models
 
 class Ingridients(models.Model):
     # for hamburgers
-    cheese  = models.IntegerField(default=1)
-    ham     = models.IntegerField(default=1)
-    onion   = models.IntegerField(default=1)
-    bread   = models.IntegerField(default=1)
-    ketchup = models.IntegerField(default=1)
+    cheese  = models.IntegerField(default=0)
+    ham     = models.IntegerField(default=0)
+    onion   = models.IntegerField(default=0)
+    bread   = models.IntegerField(default=0)
+    ketchup = models.IntegerField(default=0)
     # for pancakes
-    milk    = models.IntegerField(default=100)
-    butter  = models.IntegerField(default=200)
+    milk    = models.IntegerField(default=0)
+    butter  = models.IntegerField(default=0)
     honey   = models.IntegerField(default=0)
-    eggs    = models.IntegerField(default=3)
+    eggs    = models.IntegerField(default=0)
     # ...
 
 class CookBook(models.Model):
-    recipe_name = models.CharField(max_length=48)
+    RECIPES = (
+            (0, 'Hamburger'),
+            (1, 'Pancake'))
+    recipe_name = models.IntegerField(default=0,
+            choices=RECIPES)
     ingridients = models.ForeignKey(Ingridients,
             on_delete=models.CASCADE)
 
