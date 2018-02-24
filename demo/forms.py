@@ -16,3 +16,5 @@ class CookBookForm(forms.ModelForm):
         model = CookBook
         exclude = ['ingridients']
 
+class IngridientsForm(forms.Form):
+    pass
