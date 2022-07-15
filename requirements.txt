@@ -3,7 +3,7 @@ anyjson==0.3.3
 billiard==3.5.0.3
 celery==4.1.0
 Django==1.11.7
-django-celery-results==1.0.1
+django-celery-results==2.4.0
 kombu==4.1.0
 pkg-resources==0.0.0
 PyMySQL==0.8.0
